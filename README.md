@@ -1,8 +1,8 @@
 <div align="center">
-    <picuture>
+    <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/eniac-flavio/task-family/main/app/src/main/res/drawable/icon_dark.png">
         <img src="https://raw.githubusercontent.com/eniac-flavio/task-family/main/app/src/main/res/drawable/icon.png" height="125">
-    </picuture>
+    </picture>
     <h1>Task Family</h1>
 </div>
 
