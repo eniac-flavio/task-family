@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="text50">#F4F1F0</color>
+    <color name="text100">#E9E4E2</color>
+    <color name="text200">#D4C9C4</color>
+    <color name="text300">#BEAEA7</color>
+    <color name="text400">#A8938A</color>
+    <color name="text500">#93786C</color>
+    <color name="text600">#756057</color>
+    <color name="text700">#584841</color>
+    <color name="text800">#3B302B</color>
+    <color name="text900">#1D1816</color>
+    <color name="text950">#0F0C0B</color>
+
+    <color name="bg50">#0F0C0A</color>
+    <color name="bg100">#1F1814</color>
+    <color name="bg200">#3D3029</color>
+    <color name="bg300">#5C473D</color>
+    <color name="bg400">#7A5F52</color>
+    <color name="bg500">#997766</color>
+    <color name="bg600">#AD9285</color>
+    <color name="bg700">#C2ADA3</color>
+    <color name="bg800">#D6C9C2</color>
+    <color name="bg900">#EBE4E0</color>
+    <color name="bg950">#F9F7F6</color>
+
+    <color name="prim50">#FDF6E7</color>
+    <color name="prim100">#FCECCF</color>
+    <color name="prim200">#F8D9A0</color>
+    <color name="prim300">#F5C670</color>
+    <color name="prim400">#F2B440</color>
+    <color name="prim500">#EEA111</color>
+    <color name="prim600">#BF810D</color>
+    <color name="prim700">#8F600A</color>
+    <color name="prim800">#5F4007</color>
+    <color name="prim900">#302003</color>
+    <color name="prim950">#181002</color>
+
+    <color name="sec50">#F7F9EC</color>
+    <color name="sec100">#EEF2D9</color>
+    <color name="sec200">#DDE6B3</color>
+    <color name="sec300">#CCD98C</color>
+    <color name="sec400">#BBCC66</color>
+    <color name="sec500">#AABF40</color>
+    <color name="sec600">#889933</color>
+    <color name="sec700">#667326</color>
+    <color name="sec800">#444D19</color>
+    <color name="sec900">#22260D</color>
+    <color name="sec950">#111306</color>
+
+    <color name="acc50">#F2F9EC</color>
+    <color name="acc100">#E6F2D9</color>
+    <color name="acc200">#CDE6B3</color>
+    <color name="acc300">#B4D98C</color>
+    <color name="acc400">#9BCC66</color>
+    <color name="acc500">#82BF40</color>
+    <color name="acc600">#689933</color>
+    <color name="acc700">#4E7326</color>
+    <color name="acc800">#344D19</color>
+    <color name="acc900">#1A260D</color>
+    <color name="acc950">#0D1306</color>
 </resources>

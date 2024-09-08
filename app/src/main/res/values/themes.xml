@@ -1,8 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Taskfamily" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Tema claro -->
+        <item name="colorPrimary">@color/prim400</item>
+        <item name="colorAccent">@color/acc400</item>
+        <item name="colorSecondary">@color/sec400</item>
+        <item name="android:colorBackground">@color/bg950</item>
     </style>
 
     <style name="Theme.Taskfamily" parent="Base.Theme.Taskfamily" />

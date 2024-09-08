@@ -1,3 +1,3 @@
 <resources>
-    <string name="app_name">task-family</string>
+    <string name="app_name" translatable="false">Task Family</string>
 </resources>
