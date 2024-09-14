@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background50">
+    android:background="@color/bg950">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="40dp"
         android:orientation="vertical"
-        android:background="@color/background50">
+        android:background="@color/bg950">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="Vamos Registrar!"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/Txtcolor800"
+                android:textColor="@color/text800"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="É um prazer te conhecer"
-            android:textColor="@color/Txtcolor300"
+            android:textColor="@color/text300"
             android:textSize="25sp" />
 
         <ImageView
@@ -61,7 +61,7 @@
             android:hint="Endereço de Email"
             android:layout_marginTop="10dp"
             android:background="@drawable/editext_model"
-            android:enabled="false" />
+             />
 
         <EditText
             android:id="@+id/txtSenha"
@@ -70,7 +70,6 @@
             android:hint="Senha"
             android:layout_marginTop="15dp"
             android:background="@drawable/editext_model"
-            android:enabled="false"
             android:inputType="textPassword" />
 
         <EditText
@@ -80,7 +79,6 @@
             android:hint="Confirmar senha"
             android:layout_marginTop="15dp"
             android:background="@drawable/editext_model"
-            android:enabled="false"
             android:inputType="textPassword" />
 
         <Button
@@ -115,11 +113,10 @@
                 android:layout_height="wrap_content" />
 
             <!-- Link "Entrar" pré-definido (no Java) -->
-            <TextView
-                android:id="@+id/registerTextView"
+            <Button
+                android:id="@+id/registerVoltar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="Entrar"
