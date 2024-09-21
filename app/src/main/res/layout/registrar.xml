@@ -82,6 +82,7 @@
             android:inputType="textPassword" />
 
         <Button
+            android:id="@+id/ConfirmarReg"
             android:layout_width="314dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
