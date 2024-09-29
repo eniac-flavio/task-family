@@ -1,7 +1,9 @@
 package com.example.task_family;
+
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
+
 public class EmailValidatorManager {
     private final Context context;
     private final EditText emailEditText;
