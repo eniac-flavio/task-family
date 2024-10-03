@@ -1,6 +1,25 @@
 package com.example.task_family;
 
-public class Responsavel implements DatabaseTable {
+public class Responsavel extends User {
+    private String telefone;
+
+    // Construtores sem parâmetros (padrão) e com parâmetros (opcional)
+    public Responsavel() {
+        super();
+    }
+    public Responsavel(int id, String email, String password, String nome, String tipo, String telefone) {
+        super(id, email, password, nome, tipo);
+        this.telefone = telefone;
+    }
+
+    // Getters e Setters
+    public String getTelefone() {
+        return telefone;
+    }
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     @Override
     public String getTableName() {
         return "responsavel";
@@ -8,10 +27,6 @@ public class Responsavel implements DatabaseTable {
 
     @Override
     public String getCreateTableSQL() {
-        return "CREATE TABLE " + getTableName() + " ("
-                + "id integer primary key autoincrement not null,"
-                + "nome text not null,"
-                + "telefone text not null,"
-                + "dependentes text)"; // A coleção de strings pode ser armazenada como uma única string
+        return super.getCreateTableSQL().replace(")", ", telefone text)");
     }
 }

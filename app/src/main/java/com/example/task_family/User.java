@@ -1,36 +1,43 @@
 package com.example.task_family;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+public abstract class User extends Account implements DatabaseTable {
+    private String nome;
+    private String tipo;
 
-@Entity
-public class User {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    @ColumnInfo(name = "email")
-    private String email;
-
-    @ColumnInfo(name = "password")
-    private String password;
-
-    public User(int id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
+    public User() {
+        super(0, "", "");
+        this.nome = "";
+        this.tipo = "";
     }
 
-    // Métodos Getters
-    public int getId() {
-        return id;
+    public User(int id, String email, String password, String nome, String tipo) {
+        super(id, email, password);
+        this.nome = nome;
+        this.tipo = tipo;
     }
 
-    public String getEmail() {
-        return email;
+    // Getters e Setters
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getPassword() {
-        return password;
+    public String getTipo() {
+        return tipo;
+    }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    @Override
+    public String getCreateTableSQL() {
+        return "CREATE TABLE " + getTableName() + " ("
+                + "id integer primary key autoincrement not null,"
+                + "email text not null,"
+                + "password text not null,"
+                + "nome text not null,"
+                + "tipo text not null)";
     }
 }

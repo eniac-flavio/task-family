@@ -26,13 +26,14 @@
                 android:layout_width="38dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
-                android:src="@drawable/icon"/>
+                android:src="@drawable/icon"
+                tools:ignore="RtlHardcoded" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vamos Registrar!"
-                android:layout_marginLeft="10dp"
+                android:text="@string/sign_greeting"
+                android:layout_marginStart="10dp"
                 android:textColor="@color/text700"
                 android:textSize="32sp"
                 android:textStyle="bold" />
@@ -43,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="É um prazer te conhecer"
+            android:text="@string/sign_slogan"
             android:textColor="@color/text600"
             android:textSize="20sp"
             android:textStyle="bold"/>
@@ -60,7 +61,7 @@
             android:id="@+id/txtEmail"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:hint="Endereço de Email*"
+            android:hint="@string/email_adress_required"
             android:layout_marginTop="10dp"
             android:background="@drawable/editext_model"
             />
@@ -70,7 +71,7 @@
             android:id="@+id/txtSenha"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:hint="Senha*"
+            android:hint="@string/password_required"
             android:layout_marginTop="15dp"
             android:background="@drawable/editext_model"
             android:inputType="textPassword" />
@@ -79,7 +80,7 @@
             android:id="@+id/txtConfirmarSenha"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:hint="Confirmar senha*"
+            android:hint="@string/password_confirm_required"
             android:layout_marginTop="15dp"
             android:background="@drawable/editext_model"
             android:inputType="textPassword" />
@@ -91,7 +92,7 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/button_model"
             android:paddingVertical="12dp"
-            android:text="Registrar"
+            android:text="@string/register"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -122,12 +123,13 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="Entrar"
+                android:text="@string/enter"
                 android:textColor="#765A48"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck"
-                android:background="@drawable/corner"/>
+                android:background="@drawable/corner"
+                />
 
         </LinearLayout>
     </LinearLayout>

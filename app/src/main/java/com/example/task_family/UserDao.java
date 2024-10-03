@@ -10,13 +10,13 @@ import java.util.List;
 public interface UserDao {
     // Método para inserir um usuário
     @Insert
-    void insertUser(User user);
+    void insertUser(Account account);
 
     // Método para deletar um usuário
     @Delete
-    void deleteUser(User user);
+    void deleteUser(Account account);
 
     // Buscar todos os usuários por ID ordenados
     @Query("SELECT * FROM User ORDER BY id ASC")
-    List<User> getAllUsersOrderedById();
+    List<Account> getAllUsersOrderedById();
 }

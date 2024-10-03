@@ -1,3 +1,20 @@
 <resources>
+    <!-- App/General strings -->
     <string name="app_name" translatable="false">Task Family</string>
+    <string name="email_adress" translatable="true">Endereço de e-mail</string>
+    <string name="email_adress_required" translatable="true">Endereço de e-mail*</string>
+    <string name="password" translatable="true">Senha</string>
+    <string name="password_required" translatable="true">Senha*</string>
+    <string name="password_confirm_required" translatable="true">Confirmar senha*</string>
+    <string name="enter" translatable="true">Entrar</string>
+    <string name="register" translatable="true">Registrar</string>
+
+    <!-- Auth strings -->
+    <string name="login_greeting" translatable="true">Vamos Entrar!</string>
+    <string name="login_slogan" translatable="true">É bom te ver novamente</string>
+    <string name="dont_have_account" translatable="true">Não possui uma conta?</string>
+
+    <string name="sign_greeting" translatable="true">Vamos Registrar!</string>
+    <string name="sign_slogan" translatable="true">É um prazer te conhecer</string>
+    <string name="have_account" translatable="true">Já possui uma conta?</string>
 </resources>

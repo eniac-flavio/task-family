@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 //Cria database
 @Database(
         //fala oque vai ser a database, no caso a classe User
-        entities = User.class,
+        entities = Account.class,
         version = 1
 )
 //A database e um classe abstrata
