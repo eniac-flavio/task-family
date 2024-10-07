@@ -17,4 +17,9 @@
     <string name="sign_greeting" translatable="true">Vamos Registrar!</string>
     <string name="sign_slogan" translatable="true">É um prazer te conhecer</string>
     <string name="have_account" translatable="true">Já possui uma conta?</string>
+
+    <string name="login_greeting2" translatable="true">Bem Vindo!</string>
+    <string name="login_slogan2" translatable="true">Resolva tarefas com Task Fun</string>
+    <string name="iam_responsable" translatable="true">Sou responsável</string>
+    <string name="iam_child" translatable="true">Sou criança</string>
 </resources>

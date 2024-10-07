@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg950">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="40dp"
+        android:orientation="vertical"
+        android:background="@color/bg950">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:src="@drawable/icon"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_greeting"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/text700"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_slogan"
+            android:textColor="@color/text600"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/image5_registrar"/>
+
+        <EditText
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:hint="@string/email_adress_required"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/editext_model"
+            />
+
+
+        <EditText
+            android:id="@+id/txtSenha"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:hint="@string/password_required"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/editext_model"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/txtConfirmarSenha"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:hint="@string/password_confirm_required"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/editext_model"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/ConfirmarReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/button_model"
+            android:paddingVertical="12dp"
+            android:text="@string/register"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Já possui uma conta?"
+                android:textColor="#765A48"
+                android:textSize="15sp" />
+
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content" />
+
+            <!-- Link "Entrar" pré-definido (no Java) -->
+            <Button
+                android:id="@+id/registerVoltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/enter"
+                android:textColor="#765A48"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck"
+                android:background="@drawable/corner"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
