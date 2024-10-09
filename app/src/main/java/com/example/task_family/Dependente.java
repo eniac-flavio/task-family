@@ -11,6 +11,7 @@ public class Dependente extends User {
     public Dependente() {
         super();
     }
+
     public Dependente(int id, String email, String password, String nome, String tipo, int responsavelId, int[] tarefas, int pontos, int[] skins, int[] conquistas) {
         super(id, email, password, nome, tipo);
         this.responsavelId = responsavelId;
@@ -45,6 +46,7 @@ public class Dependente extends User {
     public int getResponsavelId() {
         return responsavelId;
     }
+
     public void setResponsavelId(int responsavelId) {
         this.responsavelId = responsavelId;
     }
@@ -52,6 +54,7 @@ public class Dependente extends User {
     public int[] getTarefas() {
         return tarefas;
     }
+
     public void setTarefas(int[] tarefas) {
         this.tarefas = tarefas;
     }
@@ -59,6 +62,7 @@ public class Dependente extends User {
     public int getPontos() {
         return pontos;
     }
+
     public void setPontos(int pontos) {
         this.pontos = pontos;
     }
@@ -66,6 +70,7 @@ public class Dependente extends User {
     public int[] getSkins() {
         return skins;
     }
+
     public void setSkins(int[] skins) {
         this.skins = skins;
     }
@@ -73,6 +78,7 @@ public class Dependente extends User {
     public int[] getConquistas() {
         return conquistas;
     }
+
     public void setConquistas(int[] conquistas) {
         this.conquistas = conquistas;
     }
@@ -82,6 +88,7 @@ public class Dependente extends User {
         return "dependente";
     }
 
+    // TODO: Verificar se a lógica de implementação faz sentido, já que a lógica de Responsável é diferente e parece funcional
     @Override
     public String getCreateTableSQL() {
         return "CREATE TABLE " + getTableName() + " ("

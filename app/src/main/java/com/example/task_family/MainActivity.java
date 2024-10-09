@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setupListeners();
 
         // TODO: Entender o que raios está acontecendo aqui
+        // Eu espero nunca mais ter que ver Java na vida, estou perdendo a sanidade com esses códigos
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Configura o listener para os cliques na BottomNavigationView

@@ -1,8 +1,10 @@
 package com.example.task_family;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegistrarActivity extends AppCompatActivity {

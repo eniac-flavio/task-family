@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Account {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private final int id;
 
     @ColumnInfo(name = "email")
-    private String email;
+    private final String email;
 
     @ColumnInfo(name = "password")
-    private String password;
+    private final String password;
 
     public Account(int id, String email, String password) {
         this.id = id;
@@ -25,9 +25,11 @@ public class Account {
     public int getId() {
         return id;
     }
+
     public String getEmail() {
         return email;
     }
+
     public String getPassword() {
         return password;
     }

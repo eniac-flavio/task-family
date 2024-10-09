@@ -1,6 +1,8 @@
 package com.example.task_family;
 
 public abstract class User extends Account implements DatabaseTable {
+    // Ainda sem saber quais são as diferênças entre User e Account
+
     private String nome;
     private String tipo;
 
@@ -20,6 +22,7 @@ public abstract class User extends Account implements DatabaseTable {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -27,6 +30,7 @@ public abstract class User extends Account implements DatabaseTable {
     public String getTipo() {
         return tipo;
     }
+
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
