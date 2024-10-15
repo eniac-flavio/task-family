@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Account {
+    @ColumnInfo(name="account_id")
     @PrimaryKey(autoGenerate = true)
     private final int id;
 
@@ -15,10 +16,14 @@ public class Account {
     @ColumnInfo(name = "password")
     private final String password;
 
-    public Account(int id, String email, String password) {
+    @ColumnInfo(name = "type")
+    private final String type;
+
+    public Account(int id, String email, String password, String type){
         this.id = id;
         this.email = email;
         this.password = password;
+        this.type = type;
     }
 
     // Métodos Getters
@@ -33,4 +38,10 @@ public class Account {
     public String getPassword() {
         return password;
     }
+
+    public String getType() {
+        return type;
+    }
 }
+
+

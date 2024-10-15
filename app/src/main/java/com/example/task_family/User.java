@@ -1,4 +1,4 @@
-package com.example.task_family;
+/* package com.example.task_family;
 
 public abstract class User extends Account implements DatabaseTable {
     // Ainda sem saber quais são as diferênças entre User e Account
@@ -45,3 +45,4 @@ public abstract class User extends Account implements DatabaseTable {
                 + "tipo text not null)";
     }
 }
+*/

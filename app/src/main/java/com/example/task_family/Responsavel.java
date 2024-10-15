@@ -1,4 +1,4 @@
-package com.example.task_family;
+/* package com.example.task_family;
 
 public class Responsavel extends User {
     private String telefone;
@@ -30,8 +30,10 @@ public class Responsavel extends User {
     /* A ideia aqui é sobreescrever a inserção de dados que existe na classe User
        de modo que o parênteses final seja trocado pelo restante do que é necessário
        para que a nova inserção seja feita */
+/*
     @Override
     public String getCreateTableSQL() {
         return super.getCreateTableSQL().replace(")", ", telefone text)");
     }
-}
+}   /*
+    */

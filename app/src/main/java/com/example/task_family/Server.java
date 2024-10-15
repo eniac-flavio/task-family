@@ -1,4 +1,4 @@
-package com.example.task_family;
+/* package com.example.task_family;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -47,3 +47,4 @@ public class Server extends SQLiteOpenHelper {
         onCreate(db);
     }
 }
+*/

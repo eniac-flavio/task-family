@@ -1,4 +1,4 @@
-package com.example.task_family;
+/* package com.example.task_family;
 
 public class Dependente extends User {
     private int responsavelId;
@@ -105,3 +105,4 @@ public class Dependente extends User {
                 + "FOREIGN KEY(responsavel_id) REFERENCES responsavel(id) ON DELETE CASCADE)";
     }
 }
+*/
