@@ -1,5 +1,6 @@
 package com.example.task_family;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegistrarActivity extends AppCompatActivity {
 
     private Button buttonRegistrar;
-    private EditText editTextEmail;  // Declaração do EditText para o email
+    private Button buttonVoltar;  // Novo botão para voltar
+    private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextConfirmarSenha;
 
@@ -30,8 +32,9 @@ public class RegistrarActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        buttonRegistrar = findViewById(R.id.ConfirmarReg);  // Certifique-se de que este ID existe no XML
-        editTextEmail = findViewById(R.id.txtEmail);  // O ID deve corresponder ao definido no XML
+        buttonRegistrar = findViewById(R.id.ConfirmarReg);
+        buttonVoltar = findViewById(R.id.registerVoltar);  // Inicialização do novo botão
+        editTextEmail = findViewById(R.id.txtEmail);
         editTextSenha = findViewById(R.id.txtSenha);
         editTextConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
 
@@ -45,12 +48,15 @@ public class RegistrarActivity extends AppCompatActivity {
                 realizarRegistro();
             }
         });
+
+        // Listener para o botão de voltar
+        buttonVoltar.setOnClickListener(v -> voltarParaLogin());
     }
 
     private boolean validarEmail() {
-        emailValidatorManager.validateEmail();  // Valida o e-mail usando o EmailValidatorManager
+        emailValidatorManager.validateEmail();
         String email = editTextEmail.getText().toString();
-        return EmailValidator.isValid(email);  // Certifique-se que o método isValid funciona
+        return EmailValidator.isValid(email);
     }
 
     private boolean validarSenha() {
@@ -74,5 +80,12 @@ public class RegistrarActivity extends AppCompatActivity {
 
         // Exemplo: voltar para a tela principal após o registro
         finish();
+    }
+
+    // Novo método para voltar para a tela de login
+    private void voltarParaLogin() {
+        Intent intent = new Intent(RegistrarActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();  // Encerra a atividade atual para que o usuário não possa voltar a ela pressionando o botão "Voltar" do dispositivo
     }
 }
