@@ -32,6 +32,7 @@ public class Server extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Criação e atualização da lista de tabelas
     @Override
     public void onCreate(SQLiteDatabase db) {
         for (DatabaseTable table : tables) {

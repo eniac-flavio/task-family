@@ -85,6 +85,9 @@
 
     </LinearLayout>
 
+    <!-- Existe alguém que realmente gosta de fazer XML?
+         Eu já perdi a sanidade tentando fazer esses códigos -->
+
     <!-- Navbar fixa -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
