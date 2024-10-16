@@ -1,7 +1,12 @@
 package com.example.task_family;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegistrarActivity extends AppCompatActivity {
 
     private Button buttonRegistrar;
-    private Button buttonVoltar;  // Novo botão para voltar
+    private Button buttonVoltar;
     private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextConfirmarSenha;
@@ -19,21 +24,23 @@ public class RegistrarActivity extends AppCompatActivity {
     private SenhaValidator senhaValidator;
     private EmailValidatorManager emailValidatorManager;
 
+    // Constantes do banco de dados
+    private static final String DB_NAME = "task.db";
+    private static final int DB_VERSION = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
-        // Inicializar as views
+        // Inicializa as views e configura os listeners
         initializeViews();
-
-        // Configurar os listeners dos botões
         setupListeners();
     }
 
     private void initializeViews() {
         buttonRegistrar = findViewById(R.id.ConfirmarReg);
-        buttonVoltar = findViewById(R.id.registerVoltar);  // Inicialização do novo botão
+        buttonVoltar = findViewById(R.id.registerVoltar);
         editTextEmail = findViewById(R.id.txtEmail);
         editTextSenha = findViewById(R.id.txtSenha);
         editTextConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
@@ -49,19 +56,18 @@ public class RegistrarActivity extends AppCompatActivity {
             }
         });
 
-        // Listener para o botão de voltar
         buttonVoltar.setOnClickListener(v -> voltarParaLogin());
     }
 
     private boolean validarEmail() {
         emailValidatorManager.validateEmail();
-        String email = editTextEmail.getText().toString();
+        String email = editTextEmail.getText().toString().trim();
         return EmailValidator.isValid(email);
     }
 
     private boolean validarSenha() {
-        String senha = editTextSenha.getText().toString();
-        String confirmarSenha = editTextConfirmarSenha.getText().toString();
+        String senha = editTextSenha.getText().toString().trim();
+        String confirmarSenha = editTextConfirmarSenha.getText().toString().trim();
         if (senhaValidator.validarSenha(senha, confirmarSenha)) {
             return true;
         } else {
@@ -75,17 +81,81 @@ public class RegistrarActivity extends AppCompatActivity {
     }
 
     private void realizarRegistro() {
-        // Lógica de registro (banco de dados ou qualquer outra ação)
-        mostrarMensagem("Registro realizado com sucesso!");
+        String email = editTextEmail.getText().toString().trim();
+        String senha = editTextSenha.getText().toString().trim();
 
-        // Exemplo: voltar para a tela principal após o registro
-        finish();
+        if (email.isEmpty() || senha.isEmpty()) {
+            mostrarMensagem("Preencha todos os campos.");
+            return;
+        }
+
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+
+        try {
+            db = new SQLiteOpenHelper(this, DB_NAME, null, DB_VERSION) {
+                @Override
+                public void onCreate(SQLiteDatabase db) {
+                    try {
+                        String createTableSQL = "CREATE TABLE IF NOT EXISTS responsavel (" +
+                                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                "email TEXT UNIQUE NOT NULL, " +
+                                "password TEXT NOT NULL)";
+                        db.execSQL(createTableSQL);
+                        Log.i("DB_CREATE", "Tabela 'responsavel' criada com sucesso.");
+                    } catch (Exception e) {
+                        Log.e("DB_ERROR", "Erro ao criar a tabela: ", e);
+                    }
+                }
+
+                @Override
+                public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+                    db.execSQL("DROP TABLE IF EXISTS responsavel");
+                    onCreate(db);
+                }
+            }.getWritableDatabase();
+
+            // Verificar se o email já está registrado
+            cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email});
+            if (cursor.getCount() > 0) {
+                mostrarMensagem("Erro: Email já cadastrado!");
+                return;
+            }
+
+            // Inserir o novo usuário
+            ContentValues values = new ContentValues();
+            values.put("email", email);
+            values.put("password", senha);
+
+            Log.i("DB_INSERT", "Tentando inserir: " + values);
+
+            long result = db.insert("responsavel", null, values);
+            if (result == -1) {
+                Log.e("DB_ERROR", "Falha ao inserir usuário: " + email);
+                mostrarMensagem("Erro: Não foi possível registrar o usuário.");
+            } else {
+                Log.i("DB_SUCCESS", "Usuário registrado com sucesso: " + email);
+                mostrarMensagem("Registro realizado com sucesso!");
+                voltarParaMain();
+            }
+        } catch (Exception e) {
+            Log.e("DB_EXCEPTION", "Erro durante o registro: ", e);
+            mostrarMensagem("Erro durante o registro: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+            if (db != null) db.close();
+        }
     }
 
-    // Novo método para voltar para a tela de login
     private void voltarParaLogin() {
         Intent intent = new Intent(RegistrarActivity.this, LoginActivity.class);
         startActivity(intent);
-        finish();  // Encerra a atividade atual para que o usuário não possa voltar a ela pressionando o botão "Voltar" do dispositivo
+        finish();
+    }
+
+    private void voltarParaMain() {
+        Intent intent = new Intent(RegistrarActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

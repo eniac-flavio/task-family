@@ -1,8 +1,12 @@
 package com.example.task_family;
 
+import android.widget.EditText;
+
 public abstract class User extends Account implements DatabaseTable {
     // Ainda sem saber quais são as diferênças entre User e Account
-
+    private EditText editTextEmail;
+    private EditText editTextSenha;
+    private EditText editTextConfirmarSenha;
     private String nome;
     private String tipo;
 
@@ -45,3 +49,5 @@ public abstract class User extends Account implements DatabaseTable {
                 + "tipo text not null)";
     }
 }
+
+
