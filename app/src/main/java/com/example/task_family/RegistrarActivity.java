@@ -4,18 +4,25 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.task_family.AccountDatabase;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
 
 public class RegistrarActivity extends AppCompatActivity {
 
     private Button buttonRegistrar;
-    private EditText editTextEmail;  // Declaração do EditText para o email
+    private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextConfirmarSenha;
-
     private SenhaValidator senhaValidator;
     private EmailValidatorManager emailValidatorManager;
+
+    AccountDatabase accountDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +37,8 @@ public class RegistrarActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        buttonRegistrar = findViewById(R.id.ConfirmarReg);  // Certifique-se de que este ID existe no XML
-        editTextEmail = findViewById(R.id.txtEmail);  // O ID deve corresponder ao definido no XML
+        buttonRegistrar = findViewById(R.id.ConfirmarReg);
+        editTextEmail = findViewById(R.id.txtEmail);
         editTextSenha = findViewById(R.id.txtSenha);
         editTextConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
 
@@ -39,6 +46,21 @@ public class RegistrarActivity extends AppCompatActivity {
         emailValidatorManager = new EmailValidatorManager(this, editTextEmail);
     }
 
+    // Callback is now simpler, without setupListeners()
+    RoomDatabase.Callback myCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+        }
+
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+        }
+    };
+
+
+    // setupListeners() is now a direct member of RegistrarActivity
     private void setupListeners() {
         buttonRegistrar.setOnClickListener(v -> {
             if (validarEmail() && validarSenha()) {
@@ -48,9 +70,9 @@ public class RegistrarActivity extends AppCompatActivity {
     }
 
     private boolean validarEmail() {
-        emailValidatorManager.validateEmail();  // Valida o e-mail usando o EmailValidatorManager
+        emailValidatorManager.validateEmail();
         String email = editTextEmail.getText().toString();
-        return EmailValidator.isValid(email);  // Certifique-se que o método isValid funciona
+        return EmailValidator.isValid(email);
     }
 
     private boolean validarSenha() {
@@ -69,10 +91,17 @@ public class RegistrarActivity extends AppCompatActivity {
     }
 
     private void realizarRegistro() {
-        // Lógica de registro (banco de dados ou qualquer outra ação)
+        String email = editTextEmail.getText().toString();
+        String password = editTextSenha.getText().toString();
         mostrarMensagem("Registro realizado com sucesso!");
 
-        // Exemplo: voltar para a tela principal após o registro
+        Account a1 = new Account(0, email, password, "Responsável");
+
+        personDB.getAccountDAO().addAccount(a1);
+
         finish();
     }
+
+    getDataButton.setOOnclickListener(new ON)
 }
+
