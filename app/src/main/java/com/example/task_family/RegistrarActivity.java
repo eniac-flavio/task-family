@@ -6,7 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,6 +40,37 @@ public class RegistrarActivity extends AppCompatActivity {
         // Inicializa as views e configura os listeners
         initializeViews();
         setupListeners();
+        setupEmailEditTextNoNewline();
+    }
+
+
+//Usamos estes metodos para prevenir a quebra de linhas no campo email
+    private void setupEmailEditTextNoNewline() {
+        editTextEmail.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // Previne a ação padrão do ENTER
+                return (keyCode == KeyEvent.KEYCODE_ENTER);
+            }
+        });
+
+        editTextEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.contains("\n")) {
+                    String newText = text.replace("\n", "");
+                    editTextEmail.setText(newText);
+                    editTextEmail.setSelection(newText.length());
+                }
+            }
+        });
     }
 
     private void initializeViews() {
@@ -48,7 +83,7 @@ public class RegistrarActivity extends AppCompatActivity {
         senhaValidator = new SenhaValidator();
         emailValidatorManager = new EmailValidatorManager(this, editTextEmail);
     }
-
+// Quando o botao registrar for acionado ele chama metodos de outra classe para verificarem autenticidade do email e senha
     private void setupListeners() {
         buttonRegistrar.setOnClickListener(v -> {
             if (validarEmail() && validarSenha()) {
@@ -58,13 +93,13 @@ public class RegistrarActivity extends AppCompatActivity {
 
         buttonVoltar.setOnClickListener(v -> voltarParaLogin());
     }
-
+// metodo de valida o email
     private boolean validarEmail() {
         emailValidatorManager.validateEmail();
         String email = editTextEmail.getText().toString().trim();
         return EmailValidator.isValid(email);
     }
-
+// metodo para validar a senha
     private boolean validarSenha() {
         String senha = editTextSenha.getText().toString().trim();
         String confirmarSenha = editTextConfirmarSenha.getText().toString().trim();
@@ -75,7 +110,7 @@ public class RegistrarActivity extends AppCompatActivity {
             return false;
         }
     }
-
+// mostra uma mensagem sobre a verificacao do seu email e senha
     private void mostrarMensagem(String mensagem) {
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }

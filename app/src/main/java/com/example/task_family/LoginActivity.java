@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,7 +36,38 @@ public class LoginActivity extends AppCompatActivity {
         initializeViews();
         setupEmailValidatorManager();
         setupListeners();
+        setupEmailEditTextNoNewline();
     }
+
+    private void setupEmailEditTextNoNewline() {
+        txtEmail.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // Previne a ação padrão do ENTER
+                return (keyCode == KeyEvent.KEYCODE_ENTER);
+            }
+        });
+
+        txtEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.contains("\n")) {
+                    String newText = text.replace("\n", "");
+                    txtEmail.setText(newText);
+                    txtEmail.setSelection(newText.length());
+                }
+            }
+        });
+
+    // ... [resto do código permanece inalterado]
+}
 
     private void inicializarUI() {
         configurarBotaoRegistrar();
