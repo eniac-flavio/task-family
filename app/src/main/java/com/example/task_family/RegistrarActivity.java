@@ -1,43 +1,46 @@
 package com.example.task_family;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.example.task_family.AccountDatabase;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
-
 
 public class RegistrarActivity extends AppCompatActivity {
 
     private Button buttonRegistrar;
+    private Button buttonVoltar;
     private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextConfirmarSenha;
+
     private SenhaValidator senhaValidator;
     private EmailValidatorManager emailValidatorManager;
 
-    AccountDatabase accountDB;
+    // Constantes do banco de dados
+    private static final String DB_NAME = "task.db";
+    private static final int DB_VERSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
-        // Inicializar as views
+        // Inicializa as views e configura os listeners
         initializeViews();
-
-        // Configurar os listeners dos botões
         setupListeners();
     }
 
     private void initializeViews() {
         buttonRegistrar = findViewById(R.id.ConfirmarReg);
+        buttonVoltar = findViewById(R.id.registerVoltar);
         editTextEmail = findViewById(R.id.txtEmail);
         editTextSenha = findViewById(R.id.txtSenha);
         editTextConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
@@ -46,38 +49,25 @@ public class RegistrarActivity extends AppCompatActivity {
         emailValidatorManager = new EmailValidatorManager(this, editTextEmail);
     }
 
-    // Callback is now simpler, without setupListeners()
-    RoomDatabase.Callback myCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-        }
-
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-        }
-    };
-
-
-    // setupListeners() is now a direct member of RegistrarActivity
     private void setupListeners() {
         buttonRegistrar.setOnClickListener(v -> {
             if (validarEmail() && validarSenha()) {
                 realizarRegistro();
             }
         });
+
+        buttonVoltar.setOnClickListener(v -> voltarParaLogin());
     }
 
     private boolean validarEmail() {
         emailValidatorManager.validateEmail();
-        String email = editTextEmail.getText().toString();
+        String email = editTextEmail.getText().toString().trim();
         return EmailValidator.isValid(email);
     }
 
     private boolean validarSenha() {
-        String senha = editTextSenha.getText().toString();
-        String confirmarSenha = editTextConfirmarSenha.getText().toString();
+        String senha = editTextSenha.getText().toString().trim();
+        String confirmarSenha = editTextConfirmarSenha.getText().toString().trim();
         if (senhaValidator.validarSenha(senha, confirmarSenha)) {
             return true;
         } else {
@@ -91,17 +81,81 @@ public class RegistrarActivity extends AppCompatActivity {
     }
 
     private void realizarRegistro() {
-        String email = editTextEmail.getText().toString();
-        String password = editTextSenha.getText().toString();
-        mostrarMensagem("Registro realizado com sucesso!");
+        String email = editTextEmail.getText().toString().trim();
+        String senha = editTextSenha.getText().toString().trim();
 
-        Account a1 = new Account(0, email, password, "Responsável");
+        if (email.isEmpty() || senha.isEmpty()) {
+            mostrarMensagem("Preencha todos os campos.");
+            return;
+        }
 
-        personDB.getAccountDAO().addAccount(a1);
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
 
+        try {
+            db = new SQLiteOpenHelper(this, DB_NAME, null, DB_VERSION) {
+                @Override
+                public void onCreate(SQLiteDatabase db) {
+                    try {
+                        String createTableSQL = "CREATE TABLE IF NOT EXISTS responsavel (" +
+                                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                "email TEXT UNIQUE NOT NULL, " +
+                                "password TEXT NOT NULL)";
+                        db.execSQL(createTableSQL);
+                        Log.i("DB_CREATE", "Tabela 'responsavel' criada com sucesso.");
+                    } catch (Exception e) {
+                        Log.e("DB_ERROR", "Erro ao criar a tabela: ", e);
+                    }
+                }
+
+                @Override
+                public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+                    db.execSQL("DROP TABLE IF EXISTS responsavel");
+                    onCreate(db);
+                }
+            }.getWritableDatabase();
+
+            // Verificar se o email já está registrado
+            cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email});
+            if (cursor.getCount() > 0) {
+                mostrarMensagem("Erro: Email já cadastrado!");
+                return;
+            }
+
+            // Inserir o novo usuário
+            ContentValues values = new ContentValues();
+            values.put("email", email);
+            values.put("password", senha);
+
+            Log.i("DB_INSERT", "Tentando inserir: " + values);
+
+            long result = db.insert("responsavel", null, values);
+            if (result == -1) {
+                Log.e("DB_ERROR", "Falha ao inserir usuário: " + email);
+                mostrarMensagem("Erro: Não foi possível registrar o usuário.");
+            } else {
+                Log.i("DB_SUCCESS", "Usuário registrado com sucesso: " + email);
+                mostrarMensagem("Registro realizado com sucesso!");
+                voltarParaMain();
+            }
+        } catch (Exception e) {
+            Log.e("DB_EXCEPTION", "Erro durante o registro: ", e);
+            mostrarMensagem("Erro durante o registro: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+            if (db != null) db.close();
+        }
+    }
+
+    private void voltarParaLogin() {
+        Intent intent = new Intent(RegistrarActivity.this, LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 
-    getDataButton.setOOnclickListener(new ON)
+    private void voltarParaMain() {
+        Intent intent = new Intent(RegistrarActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
-

@@ -1,12 +1,17 @@
 package com.example.task_family;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class Server extends SQLiteOpenHelper {
     private static final String DB_NAME = "task.db";
     private static final int VERSION = 1;
+
+    private static final String TAG = "Database";
 
     private final DatabaseTable[] tables = {
             new Responsavel(),
@@ -18,20 +23,43 @@ public class Server extends SQLiteOpenHelper {
         super(context, DB_NAME, null, VERSION);
     }
 
-    // Método para associar um dependente a um responsável
-    public void addDependenteToResponsavel(int responsavelId, int dependenteId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO responsavel_dependente (responsavel_id, dependente_id) VALUES (?, ?)", new Object[]{responsavelId, dependenteId});
-        db.close();
+    // Método para registrar um usuário
+    public boolean registrarUsuario(String email, String senha) {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        try {
+            db = this.getWritableDatabase();
+
+            // Verificar se o email já existe
+            cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email});
+            if (cursor.getCount() > 0) {
+                Log.e(TAG, "Email já existe no banco de dados.");
+                return false;  // Email já registrado
+            }
+
+            // Inserir o novo usuário
+            ContentValues values = new ContentValues();
+            values.put("email", email);
+            values.put("password", senha);
+
+            long result = db.insert("responsavel", null, values);
+            if (result == -1) {
+                Log.e(TAG, "Erro ao inserir usuário no banco.");
+                return false;  // Falha na inserção
+            }
+
+            Log.i(TAG, "Usuário registrado com sucesso.");
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "Erro durante o registro: ", e);
+            return false;
+        } finally {
+            if (cursor != null) cursor.close();
+            if (db != null) db.close();
+        }
     }
 
-    // Método para remover um dependente de um responsável (opcional)
-    public void removeDependenteFromResponsavel(int responsavelId, int dependenteId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM responsavel_dependente WHERE responsavel_id = ? AND dependente_id = ?", new Object[]{responsavelId, dependenteId});
-        db.close();
-    }
-
+    // Criação e atualização da lista de tabelas
     @Override
     public void onCreate(SQLiteDatabase db) {
         for (DatabaseTable table : tables) {
