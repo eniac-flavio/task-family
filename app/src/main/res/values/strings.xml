@@ -22,4 +22,7 @@
     <string name="login_slogan2" translatable="true">Resolva tarefas com Task Fun</string>
     <string name="iam_responsable" translatable="true">Sou responsável</string>
     <string name="iam_child" translatable="true">Sou criança</string>
+
+    <!-- Activitykid striings -->
+    <string name="ask_for_parent" translatable="true">Peça para os seus pais te ajudarem!</string>
 </resources>
