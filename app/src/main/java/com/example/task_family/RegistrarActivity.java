@@ -7,10 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegistrarActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class RegistrarActivity extends AppCompatActivity {
 
     // Constantes do banco de dados
     private static final String DB_NAME = "task.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,9 @@ public class RegistrarActivity extends AppCompatActivity {
         // Inicializa as views e configura os listeners
         initializeViews();
         setupListeners();
+
+        // Configura o EditText de e-mail para prevenir quebra de linha
+        EmailValidator.setupEmailEditTextNoNewline(editTextEmail);
     }
 
     private void initializeViews() {
@@ -115,14 +119,12 @@ public class RegistrarActivity extends AppCompatActivity {
                 }
             }.getWritableDatabase();
 
-            // Verificar se o email já está registrado
             cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email});
             if (cursor.getCount() > 0) {
                 mostrarMensagem("Erro: Email já cadastrado!");
                 return;
             }
 
-            // Inserir o novo usuário
             ContentValues values = new ContentValues();
             values.put("email", email);
             values.put("password", senha);

@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EmailValidatorManager emailValidatorManager;
 
     private static final String DB_NAME = "task.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,10 @@ public class LoginActivity extends AppCompatActivity {
         initializeViews();
         setupEmailValidatorManager();
         setupListeners();
+
+        EmailValidator.setupEmailEditTextNoNewline(txtEmail);
     }
+
 
     private void inicializarUI() {
         configurarBotaoRegistrar();
