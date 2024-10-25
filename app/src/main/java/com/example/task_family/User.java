@@ -3,12 +3,12 @@ package com.example.task_family;
 import android.widget.EditText;
 
 public abstract class User implements DatabaseTable {
-    // Atributos da classe Account
+    // Atributos para login
     private int id;
     private String email;
     private String password;
 
-    // Atributos específicos da classe User
+    // Atributos de dados
     private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextConfirmarSenha;
@@ -31,7 +31,7 @@ public abstract class User implements DatabaseTable {
         this.tipo = tipo;
     }
 
-    // Getters e Setters da classe Account
+    // Getters e Setters para login
     public int getId() {
         return id;
     }
@@ -56,7 +56,7 @@ public abstract class User implements DatabaseTable {
         this.password = password;
     }
 
-    // Getters e Setters específicos da classe User
+    // Getters e Setters específicos de dados
     public String getNome() {
         return nome;
     }

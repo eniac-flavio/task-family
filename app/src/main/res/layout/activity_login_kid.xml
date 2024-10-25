@@ -20,12 +20,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="38dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
+                android:importantForAccessibility="no"
                 android:src="@drawable/icon"/>
 
             <TextView
@@ -53,6 +55,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="50dp"
+            android:importantForAccessibility="no"
             android:src="@drawable/image1"/>
 
         <EditText
@@ -61,16 +64,10 @@
             android:layout_height="52dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/editext_model"
-            android:hint="@string/email_parent" />
-
-        <EditText
-            android:id="@+id/txtSenha"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:hint="@string/password_parent"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/editext_model"
-            android:inputType="textPassword" />
+            android:hint="Código de autenticação"
+            android:importantForAutofill="no"
+            android:inputType="textNoSuggestions"
+            tools:ignore="HardcodedText,TextFields" />
 
         <Button
             android:id="@+id/validatorButton"

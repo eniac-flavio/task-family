@@ -88,20 +88,9 @@ public class Dependente extends User {
         return "dependente";
     }
 
-    // TODO: Verificar se a lógica de implementação faz sentido, já que a lógica de Responsável é diferente e parece funcional
+    // TODO: testar a nova implementação simplificada do método
     @Override
     public String getCreateTableSQL() {
-        return "CREATE TABLE " + getTableName() + " ("
-                + "id integer primary key autoincrement not null,"
-                + "email text not null,"
-                + "password text not null,"
-                + "nome text not null,"
-                + "tipo text not null,"
-                + "responsavel_id integer not null,"
-                + "pontos integer not null default 0,"
-                + "tarefas text," // É necessário atualizar int[] para texto no SQLite
-                + "skins text,"
-                + "conquistas text,"
-                + "FOREIGN KEY(responsavel_id) REFERENCES responsavel(id) ON DELETE CASCADE)";
+        return super.getCreateTableSQL().replace(")", ", responsavel_id integer not null, pontos integer not null default 0, tarefas text, skins text, conquistas text, FOREIGN KEY(responsavel_id) REFERENCES responsavel(id) ON DELETE CASCADE)");
     }
 }
