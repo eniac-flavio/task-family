@@ -104,7 +104,8 @@ public class RegistrarActivity extends AppCompatActivity {
                         String createTableSQL = "CREATE TABLE IF NOT EXISTS responsavel (" +
                                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                 "email TEXT UNIQUE NOT NULL, " +
-                                "password TEXT NOT NULL)";
+                                "password TEXT NOT NULL, " +
+                                "role TEXT NOT NULL)";
                         db.execSQL(createTableSQL);
                         Log.i("DB_CREATE", "Tabela 'responsavel' criada com sucesso.");
                     } catch (Exception e) {

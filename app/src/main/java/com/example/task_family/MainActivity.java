@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity  {
     private EditText txtEmail;
     private Button validatorButton;
     private EmailValidatorManager emailValidatorManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -2,8 +2,13 @@ package com.example.task_family;
 
 import android.widget.EditText;
 
-public abstract class User extends Account implements DatabaseTable {
-    // Ainda sem saber quais são as diferênças entre User e Account
+public abstract class User implements DatabaseTable {
+    // Atributos da classe Account
+    private int id;
+    private String email;
+    private String password;
+
+    // Atributos específicos da classe User
     private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextConfirmarSenha;
@@ -11,18 +16,47 @@ public abstract class User extends Account implements DatabaseTable {
     private String tipo;
 
     public User() {
-        super(0, "", "");
+        this.id = 0;
+        this.email = "";
+        this.password = "";
         this.nome = "";
         this.tipo = "";
     }
 
     public User(int id, String email, String password, String nome, String tipo) {
-        super(id, email, password);
+        this.id = id;
+        this.email = email;
+        this.password = password;
         this.nome = nome;
         this.tipo = tipo;
     }
 
-    // Getters e Setters
+    // Getters e Setters da classe Account
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // Getters e Setters específicos da classe User
     public String getNome() {
         return nome;
     }
@@ -41,13 +75,16 @@ public abstract class User extends Account implements DatabaseTable {
 
     @Override
     public String getCreateTableSQL() {
-        return "CREATE TABLE " + getTableName() + " ("
-                + "id integer primary key autoincrement not null,"
-                + "email text not null,"
-                + "password text not null,"
-                + "nome text not null,"
-                + "tipo text not null)";
+        return "CREATE TABLE " + getTableName() + " (" +
+                "id integer primary key autoincrement not null," +
+                "email text not null," +
+                "password text not null," +
+                "nome text not null," +
+                "tipo text not null)";
+    }
+
+    @Override
+    public String getTableName() {
+        return "user"; // Defina o nome da tabela, se necessário
     }
 }
-
-
