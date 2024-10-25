@@ -3,7 +3,7 @@
     <string name="app_name" translatable="false">Task Family</string>
     <string name="email_adress" translatable="true">Endereço de e-mail</string>
     <string name="email_adress_required" translatable="true">Endereço de e-mail*</string>
-    <string name="password" translatable="true">Senha</string>
+    <string name="password">Senha</string>
     <string name="password_required" translatable="true">Senha*</string>
     <string name="password_confirm_required" translatable="true">Confirmar senha*</string>
     <string name="enter" translatable="true">Entrar</string>
@@ -23,6 +23,8 @@
     <string name="iam_responsable" translatable="true">Sou responsável</string>
     <string name="iam_child" translatable="true">Sou criança</string>
 
-    <!-- Activitykid striings -->
+    <!-- Loginkid strings -->
     <string name="ask_for_parent" translatable="true">Peça para os seus pais te ajudarem!</string>
+    <string name="email_parent" translatable="true">Email do responsável</string>
+    <string name="password_parent" translatable="true">Senha do responsável</string>
 </resources>

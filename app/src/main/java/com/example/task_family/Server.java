@@ -10,7 +10,6 @@ import android.util.Log;
 public class Server extends SQLiteOpenHelper {
     private static final String DB_NAME = "task.db";
     private static final int VERSION = 2;
-
     private static final String TAG = "Database";
 
     private final DatabaseTable[] tables = {
@@ -24,7 +23,7 @@ public class Server extends SQLiteOpenHelper {
     }
 
     // Método para registrar um usuário
-    public boolean registrarUsuario(String email, String senha) {
+    public boolean registrarUsuario(String email, String senha, String tipoUsuario) {
         SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
@@ -41,6 +40,7 @@ public class Server extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put("email", email);
             values.put("password", senha);
+            values.put("tipo_usuario", tipoUsuario); // Adiciona o tipo de usuário
 
             long result = db.insert("responsavel", null, values);
             if (result == -1) {

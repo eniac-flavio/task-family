@@ -12,6 +12,9 @@ public class GreetingActivity extends AppCompatActivity {
     private Button adultButton;
     private Button kidButton;
 
+    // tipo de usuario (crianca ou adulto)
+    public int role = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,8 @@ public class GreetingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GreetingActivity.this, LoginActivity.class);
                 startActivity(intent);
+                // se clicar no botao sou adulto o tipo de usuario e 0: adulto
+                role = 0;
             }
         });
 
@@ -32,6 +37,8 @@ public class GreetingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(GreetingActivity.this, LoginActivity.class);
                 startActivity(intent);
+                // se clicar no botao sou adulto o tipo de usuario e 1: crianca
+                role = 1;
             }
         });
     }

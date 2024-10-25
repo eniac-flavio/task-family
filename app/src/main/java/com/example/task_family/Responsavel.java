@@ -2,15 +2,17 @@ package com.example.task_family;
 
 public class Responsavel extends User {
     private String telefone;
+    private String tipoUsuario; // Novo campo para tipo de usuário
 
     // Construtores sem parâmetros (padrão) e com parâmetros (opcional)
     public Responsavel() {
         super();
     }
 
-    public Responsavel(int id, String email, String password, String nome, String tipo, String telefone) {
+    public Responsavel(int id, String email, String password, String nome, String tipo, String telefone, String tipoUsuario) {
         super(id, email, password, nome, tipo);
         this.telefone = telefone;
+        this.tipoUsuario = tipoUsuario; // Inicializa o novo campo
     }
 
     // Getters e Setters
@@ -22,16 +24,21 @@ public class Responsavel extends User {
         this.telefone = telefone;
     }
 
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @Override
     public String getTableName() {
         return "responsavel";
     }
 
-    /* A ideia aqui é sobreescrever a inserção de dados que existe na classe User
-       de modo que o parênteses final seja trocado pelo restante do que é necessário
-       para que a nova inserção seja feita */
     @Override
     public String getCreateTableSQL() {
-        return super.getCreateTableSQL().replace(")", ", telefone text)");
+        return super.getCreateTableSQL().replace(")", ", telefone text, tipo_usuario text)");
     }
 }

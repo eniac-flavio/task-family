@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Task Family</string>
+    <string name="email_adress">Endereço de e-mail</string>
+    <string name="email_adress_required">Endereço de e-mail*</string>
+    <string name="password">Senha</string>
+    <string name="password_required">Senha*</string>
+    <string name="password_confirm_required">Confirmar senha*</string>
+    <string name="enter">Entrar</string>
+    <string name="register">Registrar</string>
+    <string name="login_greeting">Vamos Entrar!</string>
+    <string name="login_slogan">É bom te ver novamente</string>
+    <string name="dont_have_account">Não possui uma conta?</string>
+    <string name="sign_greeting">Vamos Registrar!</string>
+    <string name="sign_slogan">É um prazer te conhecer</string>
+    <string name="have_account">Já possui uma conta?</string>
+    <string name="login_greeting2">Bem Vindo!</string>
+    <string name="login_slogan2">Resolva tarefas com Task Fun</string>
+    <string name="iam_responsable">Sou responsável</string>
+    <string name="iam_child">Sou criança</string>
+    <string name="ask_for_parent">Email do responsável</string>
+    <string name="email_parent">Email do responsável</string>
+    <string name="password_parent">Senha do responsável</string>
 </resources>
