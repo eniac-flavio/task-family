@@ -51,21 +51,20 @@
 
         <ImageView
             android:layout_width="240dp"
-            android:layout_height="240dp"
+            android:layout_height="174dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/image5_registrar"/>
+            android:src="@drawable/image5_registrar" />
+
 
         <EditText
             android:id="@+id/txtEmail"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:hint="@string/email_adress_required"
             android:layout_marginTop="10dp"
             android:background="@drawable/editext_model"
-            />
-
+            android:hint="@string/email_adress_required" />
 
         <EditText
             android:id="@+id/txtSenha"
@@ -84,6 +83,14 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/editext_model"
             android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/txtNomeKid"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/editext_model"
+            android:hint="@string/name_child" />
 
         <Button
             android:id="@+id/ConfirmarReg"

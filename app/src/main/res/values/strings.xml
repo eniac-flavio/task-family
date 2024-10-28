@@ -27,4 +27,5 @@
     <string name="ask_for_parent" translatable="true">Peça para os seus pais te ajudarem!</string>
     <string name="email_parent" translatable="true">Email do responsável</string>
     <string name="password_parent" translatable="true">Senha do responsável</string>
+    <string name="name_child" translatable="true">Nome da criança</string>
 </resources>
