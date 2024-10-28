@@ -13,10 +13,11 @@
         android:theme="@style/Theme.Taskfamily"
         tools:targetApi="31">
         <activity
+            android:name=".Task"
+            android:exported="false" />
+        <activity
             android:name=".GreetingActivity"
-            android:exported="true"
-            >
-
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +27,6 @@
         <activity android:name=".RegistrarActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
-
-
     </application>
 
 </manifest>
