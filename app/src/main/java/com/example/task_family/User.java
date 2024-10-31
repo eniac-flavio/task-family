@@ -5,15 +5,11 @@ import android.widget.EditText;
 public abstract class User implements DatabaseTable {
     // Atributos para login
     private int id;
-    private String email;
-    private String password;
+    private String email, password;
 
     // Atributos de dados
-    private EditText editTextEmail;
-    private EditText editTextSenha;
-    private EditText editTextConfirmarSenha;
-    private String nome;
-    private String tipo;
+    private EditText editTextEmail, editTextSenha, editTextConfirmarSenha;
+    private String nome, tipo;
 
     public User() {
         this.id = 0;
@@ -85,6 +81,6 @@ public abstract class User implements DatabaseTable {
 
     @Override
     public String getTableName() {
-        return "user"; // Defina o nome da tabela, se necessário
+        return "user";
     }
 }

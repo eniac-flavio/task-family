@@ -2,8 +2,10 @@ package com.example.task_family;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,12 +23,16 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TODO: Adiconar um método para pegar o tipo do usuário
+        String userType = "responsavel"; // Exemplo estático para testes
 
-        // TODO: Entender o que raios está acontecendo aqui
-        // Eu espero nunca mais ter que ver Java na vida, estou perdendo a sanidade com esses códigos
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Lógica para exibir seções de acordo com o tipo de usuário
+        if ("responsavel".equals(userType)) {
+            showTaskSection();
+        }
 
         // Configura o listener para os cliques na BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -52,10 +58,10 @@ public class MainActivity extends AppCompatActivity  {
                 return true;
             }
         });
+    }
 
-    }}
-
-
-
-
-
+    private void showTaskSection() {
+        LinearLayout taskSection = findViewById(R.id.task_section);
+        taskSection.setVisibility(View.VISIBLE);
+    }
+}

@@ -83,6 +83,23 @@
             android:importantForAccessibility="no"
             tools:srcCompat="@drawable/statususerbar" />
 
+        <!-- Seção de Tarefas -->
+        <LinearLayout
+            android:id="@+id/task_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"> <!-- Oculto inicialmente -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adicionar Tarefas"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <!-- Existe alguém que realmente gosta de fazer XML?
