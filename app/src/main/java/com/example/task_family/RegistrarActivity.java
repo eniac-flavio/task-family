@@ -27,7 +27,7 @@ public class RegistrarActivity extends AppCompatActivity {
 
     // Constantes do banco de dados
     private static final String DB_NAME = "task.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class RegistrarActivity extends AppCompatActivity {
                                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                 "email TEXT UNIQUE NOT NULL, " +
                                 "password TEXT NOT NULL, " +
-                                "role TEXT NOT NULL)";
+                                "role TEXT )";
                         db.execSQL(createTableSQL);
                         Log.i("DB_CREATE", "Tabela 'responsavel' criada com sucesso.");
                     } catch (Exception e) {
