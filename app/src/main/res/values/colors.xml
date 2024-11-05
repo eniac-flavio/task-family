@@ -59,4 +59,6 @@
     <color name="acc800">#344D19</color>
     <color name="acc900">#1A260D</color>
     <color name="acc950">#0D1306</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>

@@ -96,7 +96,8 @@
                 android:layout_height="wrap_content"
                 android:text="Adicionar Tarefas"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

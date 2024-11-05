@@ -35,7 +35,7 @@ public class GreetingActivity extends AppCompatActivity {
         kidButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GreetingActivity.this, LoginActivity.class);
+                Intent intent = new Intent(GreetingActivity.this, LoginKidActivity.class);
                 startActivity(intent);
                 // se clicar no botao sou adulto o tipo de usuario e 1: crianca
                 role = 1;
