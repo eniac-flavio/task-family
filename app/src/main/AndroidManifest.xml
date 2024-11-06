@@ -13,13 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taskfamily"
         tools:targetApi="31">
-
+        <activity
+            android:name=".PerfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TarefasActivity"
+            android:exported="false" />
         <activity
             android:name=".GreetingActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,7 +32,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".LoginKidActivity" />
-
     </application>
 
 </manifest>
