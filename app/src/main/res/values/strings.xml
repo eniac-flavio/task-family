@@ -23,7 +23,6 @@
     <string name="iam_responsable" translatable="true">Sou responsável</string>
     <string name="iam_child" translatable="true">Sou criança</string>
 
-    <!-- Loginkid strings -->
     <string name="ask_for_parent" translatable="true">Peça para os seus pais te ajudarem!</string>
     <string name="email_parent" translatable="true">Email do responsável</string>
     <string name="password_parent" translatable="true">Senha do responsável</string>
@@ -31,4 +30,5 @@
     <string name="home">Home</string>
     <string name="tarefas">Tarefas</string>
     <string name="perfil">Perfil</string>
+    <string name="nome_da_tarefa" translatable="true">Nome da tarefa:</string>
 </resources>
