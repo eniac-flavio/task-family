@@ -20,46 +20,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Verifica se o usuário está logado
-        checkLoginStatus();
+        // Verifica se o usuário está logado na primeira inicialização da MainActivity
+        if (!isUserLoggedIn()) {
+            // Caso não esteja logado, redireciona para LoginActivity e encerra MainActivity
+            redirectToLogin();
+            return; // Retorna para evitar continuar a execução
+        }
 
         taskSection = findViewById(R.id.task_section);
 
-        // Exemplo estático para testes, deve ser alterado conforme o tipo de usuário real
-        String userType = "responsavel";
-        updateUIBasedOnUser(userType);
+        // Configuração inicial da interface
+        updateUIBasedOnUser("responsavel");
 
-        // Configuração da barra de navegação
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-
-                if (itemId == R.id.fixed_navbar_main) {
-                    // Página atual
-                } else if (itemId == R.id.fixed_navbar_tarefas) {
-                    // Redirecionar para TarefasActivity
-                    startActivity(new Intent(MainActivity.this, TarefasActivity.class));
-                } else if (itemId == R.id.fixed_navbar_perfil) {
-                    // Redirecionar para PerfilActivity
-                    startActivity(new Intent(MainActivity.this, PerfilActivity.class));
-                }
-                return true;
-            }
-        });
+        // Configura a barra de navegação
+        setupBottomNavigation();
     }
 
     // Método para verificar se o usuário está logado
-    private void checkLoginStatus() {
+    private boolean isUserLoggedIn() {
         SharedPreferences preferences = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
-        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false); // Pega o estado de login
+        return preferences.getBoolean("isLoggedIn", false); // Retorna o estado de login
+    }
 
-        if (!isLoggedIn) {
-            // Se não estiver logado, redireciona para a tela de login
-            startActivity(new Intent(this, LoginActivity.class));
-            finish(); // Finaliza a MainActivity para não voltar nela ao pressionar o back
-        }
+    // Redireciona para a tela de login e finaliza MainActivity
+    private void redirectToLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     // Método que atualiza a interface de acordo com o tipo de usuário
@@ -69,5 +55,27 @@ public class MainActivity extends AppCompatActivity {
         } else {
             taskSection.setVisibility(View.GONE); // Esconde a seção de tarefas para outros tipos de usuário
         }
+    }
+
+    // Configuração da barra de navegação
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.fixed_navbar_main) {
+                    // Página atual
+                } else if (itemId == R.id.fixed_navbar_tarefas) {
+                    // Redireciona para TarefasActivity
+                    startActivity(new Intent(MainActivity.this, TarefasActivity.class));
+                } else if (itemId == R.id.fixed_navbar_perfil) {
+                    // Redireciona para PerfilActivity
+                    startActivity(new Intent(MainActivity.this, PerfilActivity.class));
+                }
+                return true;
+            }
+        });
     }
 }
