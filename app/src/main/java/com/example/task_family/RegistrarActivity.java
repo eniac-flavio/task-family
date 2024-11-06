@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ public class RegistrarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
-        // Inicializa as views e configura os listeners
         initializeViews();
         setupListeners();
 
@@ -101,12 +99,14 @@ public class RegistrarActivity extends AppCompatActivity {
                 @Override
                 public void onCreate(SQLiteDatabase db) {
                     try {
-                        String createTableSQL = "CREATE TABLE IF NOT EXISTS responsavel (" +
+                        // Cria tabela para responsáveis (adultos)
+                        String createTableResponsavel = "CREATE TABLE IF NOT EXISTS responsavel (" +
                                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                 "email TEXT UNIQUE NOT NULL, " +
                                 "password TEXT NOT NULL, " +
                                 "role TEXT NOT NULL)";
-                        db.execSQL(createTableSQL);
+                        db.execSQL(createTableResponsavel);
+
                         Log.i("DB_CREATE", "Tabela 'responsavel' criada com sucesso.");
                     } catch (Exception e) {
                         Log.e("DB_ERROR", "Erro ao criar a tabela: ", e);
@@ -126,9 +126,11 @@ public class RegistrarActivity extends AppCompatActivity {
                 return;
             }
 
+            // Configura o valor do papel "adulto"
             ContentValues values = new ContentValues();
             values.put("email", email);
             values.put("password", senha);
+            values.put("role", "adulto");
 
             Log.i("DB_INSERT", "Tentando inserir: " + values);
 

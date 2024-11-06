@@ -20,12 +20,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="38dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
+                android:importantForAccessibility="no"
                 android:src="@drawable/icon"
                 tools:ignore="RtlHardcoded" />
 
@@ -51,26 +53,29 @@
 
         <ImageView
             android:layout_width="240dp"
-            android:layout_height="240dp"
+            android:layout_height="174dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/image5_registrar"/>
+            android:importantForAccessibility="no"
+            android:src="@drawable/image5_registrar" />
+
 
         <EditText
             android:id="@+id/txtEmail"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:hint="@string/email_adress_required"
             android:layout_marginTop="10dp"
+            android:autofillHints="emailAddress"
             android:background="@drawable/editext_model"
-            />
-
+            android:hint="@string/email_adress_required"
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/txtSenha"
             android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:autofillHints="password"
             android:hint="@string/password_required"
             android:layout_marginTop="15dp"
             android:background="@drawable/editext_model"
@@ -80,6 +85,7 @@
             android:id="@+id/txtConfirmarSenha"
             android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:autofillHints="password"
             android:hint="@string/password_confirm_required"
             android:layout_marginTop="15dp"
             android:background="@drawable/editext_model"
@@ -110,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:text="Já possui uma conta?"
                 android:textColor="#765A48"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:ignore="HardcodedText" />
 
             <Space
                 android:layout_width="2dp"

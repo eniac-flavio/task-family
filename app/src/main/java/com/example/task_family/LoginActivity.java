@@ -1,6 +1,7 @@
 package com.example.task_family;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private EmailValidatorManager emailValidatorManager;
 
     private static final String DB_NAME = "task.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
         EmailValidator.setupEmailEditTextNoNewline(txtEmail);
     }
-
 
     private void inicializarUI() {
         configurarBotaoRegistrar();
@@ -86,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (verificarUsuario(email, senha)) {
                     mostrarMensagem("Login realizado com sucesso!");
+                    // Salvar estado de login para garantir que o usuário não seja redirecionado para o login novamente
+                    salvarEstadoDeLogin();
                     redirecionarParaMainActivity();
                 } else {
                     mostrarMensagem("Email ou senha incorretos.");
@@ -94,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // Método para verificar se o usuário existe no banco de dados
     private boolean verificarUsuario(String email, String senha) {
         SQLiteDatabase db = null;
         Cursor cursor = null;
@@ -128,13 +131,23 @@ public class LoginActivity extends AppCompatActivity {
         return usuarioExiste;
     }
 
+    // Método para salvar o estado de login no SharedPreferences
+    private void salvarEstadoDeLogin() {
+        SharedPreferences preferences = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isLoggedIn", true); // Marca que o usuário está logado
+        editor.apply();
+    }
+
+    // Método para mostrar uma mensagem em formato Toast
     private void mostrarMensagem(String mensagem) {
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }
 
+    // Método para redirecionar o usuário para a MainActivity após login
     private void redirecionarParaMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
+        finish(); // Finaliza a LoginActivity para que o usuário não possa voltar para ela com o botão "Voltar"
     }
 }

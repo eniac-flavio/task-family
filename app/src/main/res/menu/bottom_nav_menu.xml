@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/fixed_navbar_main"
         android:enabled="true"
         android:icon="@drawable/icon_dark"
-        android:title="Home" />
+        android:title="@string/home"/>
     <item
-        android:id="@+id/nav_activities"
+        android:id="@+id/fixed_navbar_tarefas"
         android:icon="@drawable/ic_task"
-        android:title="Tarefas"/>
+        android:title="@string/tarefas"/>
     <item
-        android:id="@+id/nav_profile"
+        android:id="@+id/fixed_navbar_perfil"
         android:icon="@drawable/ic_person"
-        android:title="Perfil"/>
+        android:title="@string/perfil"/>
 </menu>

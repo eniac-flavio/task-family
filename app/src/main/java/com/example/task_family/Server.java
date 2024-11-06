@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class Server extends SQLiteOpenHelper {
     private static final String DB_NAME = "task.db";
-    private static final int VERSION = 2;
+    private static final int VERSION = 4;
     private static final String TAG = "Database";
 
     private final DatabaseTable[] tables = {

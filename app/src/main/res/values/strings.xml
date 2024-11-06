@@ -27,7 +27,8 @@
     <string name="ask_for_parent" translatable="true">Peça para os seus pais te ajudarem!</string>
     <string name="email_parent" translatable="true">Email do responsável</string>
     <string name="password_parent" translatable="true">Senha do responsável</string>
-
-    <!-- Task strings -->
-    <string name="task_warning" translatable="false">Tarefas Pedentes</string>
+    <string name="name_child" translatable="true">Nome da criança</string>
+    <string name="home">Home</string>
+    <string name="tarefas">Tarefas</string>
+    <string name="perfil">Perfil</string>
 </resources>
