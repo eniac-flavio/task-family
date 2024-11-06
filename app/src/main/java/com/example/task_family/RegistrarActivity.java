@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,19 +23,18 @@ public class RegistrarActivity extends AppCompatActivity {
     private SenhaValidator senhaValidator;
     private EmailValidatorManager emailValidatorManager;
 
-    // Constantes do banco de dados
-    private static final String DB_NAME = "task.db";
-    private static final int DB_VERSION = 2;
+    private Server serverDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
+            serverDB = new Server(this); // Conexão com o banco de dados
+
         initializeViews();
         setupListeners();
 
-        // Configura o EditText de e-mail para prevenir quebra de linha
         EmailValidator.setupEmailEditTextNoNewline(editTextEmail);
     }
 
@@ -91,48 +89,19 @@ public class RegistrarActivity extends AppCompatActivity {
             return;
         }
 
-        SQLiteDatabase db = null;
-        Cursor cursor = null;
-
-        try {
-            db = new SQLiteOpenHelper(this, DB_NAME, null, DB_VERSION) {
-                @Override
-                public void onCreate(SQLiteDatabase db) {
-                    try {
-                        // Cria tabela para responsáveis (adultos)
-                        String createTableResponsavel = "CREATE TABLE IF NOT EXISTS responsavel (" +
-                                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                "email TEXT UNIQUE NOT NULL, " +
-                                "password TEXT NOT NULL, " +
-                                "role TEXT NOT NULL)";
-                        db.execSQL(createTableResponsavel);
-
-                        Log.i("DB_CREATE", "Tabela 'responsavel' criada com sucesso.");
-                    } catch (Exception e) {
-                        Log.e("DB_ERROR", "Erro ao criar a tabela: ", e);
-                    }
-                }
-
-                @Override
-                public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-                    db.execSQL("DROP TABLE IF EXISTS responsavel");
-                    onCreate(db);
-                }
-            }.getWritableDatabase();
-
-            cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email});
+        try (SQLiteDatabase db = serverDB.getWritableDatabase()) {
+            Cursor cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email});
             if (cursor.getCount() > 0) {
                 mostrarMensagem("Erro: Email já cadastrado!");
+                cursor.close();
                 return;
             }
+            cursor.close();
 
-            // Configura o valor do papel "adulto"
             ContentValues values = new ContentValues();
             values.put("email", email);
             values.put("password", senha);
             values.put("role", "adulto");
-
-            Log.i("DB_INSERT", "Tentando inserir: " + values);
 
             long result = db.insert("responsavel", null, values);
             if (result == -1) {
@@ -141,14 +110,12 @@ public class RegistrarActivity extends AppCompatActivity {
             } else {
                 Log.i("DB_SUCCESS", "Usuário registrado com sucesso: " + email);
                 mostrarMensagem("Registro realizado com sucesso!");
+                // Redireciona direto para a MainActivity
                 voltarParaMain();
             }
         } catch (Exception e) {
             Log.e("DB_EXCEPTION", "Erro durante o registro: ", e);
             mostrarMensagem("Erro durante o registro: " + e.getMessage());
-        } finally {
-            if (cursor != null) cursor.close();
-            if (db != null) db.close();
         }
     }
 

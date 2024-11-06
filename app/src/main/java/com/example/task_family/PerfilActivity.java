@@ -52,3 +52,17 @@ public class PerfilActivity extends AppCompatActivity {
         }
     }
 }
+
+// TODO: Implementar essa funcionalidade num botão para encerrar a seção do usuário
+/*
+private void logoutUsuario() {
+    SharedPreferences preferences = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+    SharedPreferences.Editor editor = preferences.edit();
+    editor.putBoolean("isLoggedIn", false); // Define como falso para deslogar
+    editor.apply();
+
+    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+    startActivity(intent);
+    finish();
+}
+*/

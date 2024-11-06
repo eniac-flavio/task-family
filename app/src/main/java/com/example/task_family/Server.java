@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class Server extends SQLiteOpenHelper {
     private static final String DB_NAME = "task.db";
-    private static final int VERSION = 4;
+    private static final int VERSION = 5;
     private static final String TAG = "Database";
 
     private final DatabaseTable[] tables = {
@@ -24,13 +24,9 @@ public class Server extends SQLiteOpenHelper {
 
     // Método para registrar um usuário
     public boolean registrarUsuario(String email, String senha, String tipoUsuario) {
-        SQLiteDatabase db = null;
-        Cursor cursor = null;
-        try {
-            db = this.getWritableDatabase();
+        try (SQLiteDatabase db = this.getWritableDatabase(); Cursor cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email})) {
 
             // Verificar se o email já existe
-            cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ?", new String[]{email});
             if (cursor.getCount() > 0) {
                 Log.e(TAG, "Email já existe no banco de dados.");
                 return false;  // Email já registrado
@@ -53,10 +49,28 @@ public class Server extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e(TAG, "Erro durante o registro: ", e);
             return false;
+        }
+    }
+
+    // Método para verificar se o usuário existe
+    public boolean verificarUsuario(String email, String senha) {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        boolean usuarioExiste = false;
+
+        try {
+            db = this.getReadableDatabase();
+            cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ? AND password = ?",
+                    new String[]{email, senha});
+            usuarioExiste = cursor.getCount() > 0;
+        } catch (Exception e) {
+            Log.e(TAG, "Erro ao verificar usuário: ", e);
         } finally {
             if (cursor != null) cursor.close();
             if (db != null) db.close();
         }
+
+        return usuarioExiste;
     }
 
     // Criação e atualização da lista de tabelas

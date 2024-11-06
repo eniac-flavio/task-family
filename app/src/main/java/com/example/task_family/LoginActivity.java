@@ -23,28 +23,30 @@ public class LoginActivity extends AppCompatActivity {
     private Button validatorButton;
     private EmailValidatorManager emailValidatorManager;
 
-    private static final String DB_NAME = "task.db";
-    private static final int DB_VERSION = 4;
+    private Server serverDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        inicializarUI();
+        // Verificar estado de login
+        if (usuarioLogado()) {
+            redirecionarParaMainActivity(); // Se já estiver logado, vai direto para a MainActivity
+            return;
+        }
+
         initializeViews();
         setupEmailValidatorManager();
         setupListeners();
 
-        EmailValidator.setupEmailEditTextNoNewline(txtEmail);
+        serverDB = new Server(this); // Conexão com o banco de dados
     }
 
-    private void inicializarUI() {
-        configurarBotaoRegistrar();
-    }
-
-    private void configurarBotaoRegistrar() {
-        findViewById(R.id.registerButton).setOnClickListener(v -> abrirTelaRegistro());
+    // Método para verificar se o usuário já está logado
+    private boolean usuarioLogado() {
+        SharedPreferences preferences = getSharedPreferences("USER_PREFS", MODE_PRIVATE);
+        return preferences.getBoolean("isLoggedIn", false);
     }
 
     private void abrirTelaRegistro() {
@@ -55,79 +57,54 @@ public class LoginActivity extends AppCompatActivity {
         txtEmail = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
         validatorButton = findViewById(R.id.validatorButton);
+
+        // Configurar o botão de registrar
+        findViewById(R.id.registerButton).setOnClickListener(v -> abrirTelaRegistro());
     }
 
     private void setupEmailValidatorManager() {
         emailValidatorManager = new EmailValidatorManager(this, txtEmail);
+        EmailValidator.setupEmailEditTextNoNewline(txtEmail);
     }
 
     private void setupListeners() {
-        txtEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    emailValidatorManager.validateEmail();
-                    return true;
-                }
-                return false;
+        txtEmail.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                emailValidatorManager.validateEmail();
+                return true;
             }
+            return false;
         });
 
-        validatorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = txtEmail.getText().toString().trim();
-                String senha = txtSenha.getText().toString().trim();
+        validatorButton.setOnClickListener(v -> realizarLogin());
+    }
 
-                if (email.isEmpty() || senha.isEmpty()) {
-                    mostrarMensagem("Por favor, preencha todos os campos.");
-                    return;
-                }
+    private void realizarLogin() {
+        String email = txtEmail.getText().toString().trim();
+        String senha = txtSenha.getText().toString().trim();
 
-                if (verificarUsuario(email, senha)) {
-                    mostrarMensagem("Login realizado com sucesso!");
-                    // Salvar estado de login para garantir que o usuário não seja redirecionado para o login novamente
-                    salvarEstadoDeLogin();
-                    redirecionarParaMainActivity();
-                } else {
-                    mostrarMensagem("Email ou senha incorretos.");
-                }
-            }
-        });
+        if (email.isEmpty() || senha.isEmpty()) {
+            mostrarMensagem("Por favor, preencha todos os campos.");
+            return;
+        }
+
+        if (verificarUsuario(email, senha)) {
+            mostrarMensagem("Login realizado com sucesso!");
+            salvarEstadoDeLogin();  // Salva o estado de login
+            redirecionarParaMainActivity();
+        } else {
+            mostrarMensagem("Email ou senha incorretos.");
+        }
     }
 
     // Método para verificar se o usuário existe no banco de dados
     private boolean verificarUsuario(String email, String senha) {
-        SQLiteDatabase db = null;
-        Cursor cursor = null;
         boolean usuarioExiste = false;
-
         try {
-            db = new SQLiteOpenHelper(this, DB_NAME, null, DB_VERSION) {
-                @Override
-                public void onCreate(SQLiteDatabase db) {
-                    // Não precisamos criar a tabela aqui, pois já foi criada na RegistrarActivity
-                }
-
-                @Override
-                public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-                    // Implementação da atualização do banco de dados, se necessário
-                }
-            }.getReadableDatabase();
-
-            // Verificar se existe um usuário com o email e senha fornecidos
-            cursor = db.rawQuery("SELECT * FROM responsavel WHERE email = ? AND password = ?",
-                    new String[]{email, senha});
-
-            usuarioExiste = cursor.getCount() > 0;
-
+            usuarioExiste = serverDB.verificarUsuario(email, senha);
         } catch (Exception e) {
             Log.e("DB_ERROR", "Erro ao verificar usuário: ", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            if (db != null) db.close();
         }
-
         return usuarioExiste;
     }
 
@@ -148,6 +125,14 @@ public class LoginActivity extends AppCompatActivity {
     private void redirecionarParaMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish(); // Finaliza a LoginActivity para que o usuário não possa voltar para ela com o botão "Voltar"
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (serverDB != null) {
+            serverDB.close();
+        }
     }
 }
