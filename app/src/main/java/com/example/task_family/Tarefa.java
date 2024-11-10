@@ -1,29 +1,34 @@
 package com.example.task_family;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Tarefa implements DatabaseTable {
-    // Atributos básicos
-    private int id, id_dependente;
+    // Constante estática para o nome da tabela
+    public static final String TABLE_NAME = "tarefa";
+
+    // Atributos
+    private int id, idDependente;
     private String descricao, titulo;
     private Date abertura, fechamento;
 
-    // Método construtor sem parâmetro (padrão) e com parâmetro (opcional)
+    // Construtor padrão e com parâmetros
     public Tarefa() {
-        this.id = 0;
-        this.id_dependente = 0;
-        this.descricao = "";
-        this.titulo = "";
-        this.abertura = new Date();
-        this.fechamento = new Date();
+        this(0, 0, "", "", new Date(), new Date());
     }
 
-    public Tarefa(int _id, int _id_dependente, String _descricao, String _titulo, Date _abertura, Date _fechamento) {
-        this.id = _id;
-        this.id_dependente = _id_dependente;
-        this.descricao = _descricao;
-        this.titulo = _titulo;
-        this.abertura = _abertura;
-        this.fechamento = _fechamento;
+    public Tarefa(int id, int idDependente, String descricao, String titulo, Date abertura, Date fechamento) {
+        this.id = id;
+        this.idDependente = idDependente;
+        this.descricao = descricao;
+        this.titulo = titulo;
+        this.abertura = abertura;
+        this.fechamento = fechamento;
     }
 
     // Getters e setters
@@ -35,12 +40,12 @@ public class Tarefa implements DatabaseTable {
         this.id = id;
     }
 
-    public int getId_dependente() {
-        return id_dependente;
+    public int getIdDependente() {
+        return idDependente;
     }
 
-    public void setId_dependente(int id_dependente) {
-        this.id_dependente = id_dependente;
+    public void setIdDependente(int idDependente) {
+        this.idDependente = idDependente;
     }
 
     public String getDescricao() {
@@ -75,20 +80,65 @@ public class Tarefa implements DatabaseTable {
         this.fechamento = fechamento;
     }
 
-    // Sobreescrita do DatabaseTable
+    // Implementação do DatabaseTable
     @Override
     public String getCreateTableSQL() {
-        return "CREATE TABLE " + getTableName() + " (" +
-                "id integer primary key autoincrement not null," +
-                "id_dependente integer not null," +
-                "descricao text not null," +
-                "titulo text not null," +
-                "abertura date not null," +
-                "fechamento date not null)";
+        return "CREATE TABLE " + TABLE_NAME + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id_dependente INTEGER NOT NULL," +
+                "descricao TEXT NOT NULL," +
+                "titulo TEXT NOT NULL," +
+                "abertura INTEGER NOT NULL," +
+                "fechamento INTEGER NOT NULL)";
     }
 
     @Override
     public String getTableName() {
-        return "tarefa";
+        return TABLE_NAME;
+    }
+
+    // Método para inserir a tarefa no banco de dados usando Server
+    public long inserir(Server server) {
+        try (SQLiteDatabase db = server.getWritableDatabase()) {
+            ContentValues values = toContentValues();
+            return db.insert(TABLE_NAME, null, values);
+        }
+    }
+
+    // Método para buscar todas as tarefas no banco de dados usando Server
+    public static List<Tarefa> buscarTodas(Server server) {
+        List<Tarefa> tarefas = new ArrayList<>();
+
+        try (SQLiteDatabase db = server.getReadableDatabase();
+             Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null)) {
+
+            while (cursor.moveToNext()) {
+                tarefas.add(fromCursor(cursor));
+            }
+        }
+        return tarefas;
+    }
+
+    // Converte a instância de Tarefa em ContentValues para inserção no banco de dados
+    public ContentValues toContentValues() {
+        ContentValues values = new ContentValues();
+        values.put("id_dependente", idDependente);
+        values.put("descricao", descricao);
+        values.put("titulo", titulo);
+        values.put("abertura", abertura.getTime());
+        values.put("fechamento", fechamento.getTime());
+        return values;
+    }
+
+    // Cria uma instância de Tarefa a partir de um Cursor
+    public static Tarefa fromCursor(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        int idDependente = cursor.getInt(cursor.getColumnIndexOrThrow("id_dependente"));
+        String descricao = cursor.getString(cursor.getColumnIndexOrThrow("descricao"));
+        String titulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo"));
+        Date abertura = new Date(cursor.getLong(cursor.getColumnIndexOrThrow("abertura")));
+        Date fechamento = new Date(cursor.getLong(cursor.getColumnIndexOrThrow("fechamento")));
+
+        return new Tarefa(id, idDependente, descricao, titulo, abertura, fechamento);
     }
 }

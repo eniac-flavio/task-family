@@ -15,7 +15,8 @@ public class Server extends SQLiteOpenHelper {
     private final DatabaseTable[] tables = {
             new Responsavel(),
             new Dependente(),
-            new ResponsavelDependente()
+            new ResponsavelDependente(),
+            new Tarefa()
     };
 
     public Server(Context context) {
