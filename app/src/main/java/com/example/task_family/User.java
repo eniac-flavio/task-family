@@ -75,8 +75,8 @@ public abstract class User implements DatabaseTable {
                 "id integer primary key autoincrement not null," +
                 "email text not null," +
                 "password text not null," +
-                "nome text not null," +
-                "tipo text not null)";
+                "nome text null," +
+                "role text not null)";
     }
 
     @Override
